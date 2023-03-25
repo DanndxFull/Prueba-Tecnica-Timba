@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using Newtonsoft.Json;
 public class DataSaver : MonoBehaviour
 {
     private string URL = "http://localhost:3000";
 
-    //public PlayerData[] players;
+    public List<PlayerData> players;
 
     [ContextMenu("Test Request Create")]
     public void OnCreatePlayers(string name)
@@ -33,17 +33,20 @@ public class DataSaver : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
 
+
         var handler = request.SendWebRequest();
-        float startTime = 0;
+        //float startTime = 0;
         while (!handler.isDone)
         {
-            startTime += Time.deltaTime;
-            if (startTime > 10f)
-            {
-                break;
-            }
+            //startTime += Time.deltaTime;
+            //if (startTime > 10f)
+            //{
+            //    request.Dispose();
+            //    break;
+            //}
             yield return null;
         }
+
 
         if (request.result == UnityWebRequest.Result.Success)
         {
@@ -53,8 +56,8 @@ public class DataSaver : MonoBehaviour
         {
             Debug.Log("No se pudo crear");
         }
-        request.uploadHandler.Dispose();
-        request.downloadHandler.Dispose();
+        request.Dispose();
+
         
         yield return null;
     }
@@ -63,15 +66,15 @@ public class DataSaver : MonoBehaviour
         UnityWebRequest request = UnityWebRequest.Get(URL + "/readAll");
         var handler = request.SendWebRequest();
 
-        float startTime = 0f;
+        //float startTime = 0f;
         while (!handler.isDone)
         {
-            startTime += Time.deltaTime;
+            //startTime += Time.deltaTime;
 
-            if (startTime > 10f)
-            {
-                break;
-            }
+            //if (startTime > 10f)
+            //{
+            //    break;
+            //}
 
             yield return null;
         }
@@ -79,23 +82,18 @@ public class DataSaver : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log(request.downloadHandler.text);
-            string json = request.downloadHandler.text;
-            string[] jsonObjects = json.Split(new string[] { "}," }, StringSplitOptions.RemoveEmptyEntries);
-            PlayerData[] newPlayers;
-            newPlayers = JsonUtility.FromJson<PlayerData[]>(json);
-            Debug.Log(newPlayers[0].namePlayer);
-            //string json = request.downloadHandler.text;
-            //List<PlayerData> players = new List<PlayerData>();
-            //foreach(string s in jsonObjects)
-            //{
-            //    Debug.Log(s);
-            //}
+
+            players = JsonConvert.DeserializeObject<List<PlayerData>>(request.downloadHandler.text);
+            foreach(PlayerData p in players)
+            {
+                Debug.Log("Nombre:"+p.namePlayer+" Score:"+ p.scorePlayer);
+            }
         }
         else
         {
             Debug.Log("No se pudo leer");
         }
-        request.downloadHandler.Dispose();
+        request.Dispose();
 
         yield return null;
     }

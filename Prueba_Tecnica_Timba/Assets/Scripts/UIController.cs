@@ -12,12 +12,17 @@ public class UIController : MonoBehaviour
         if(nameField.text != null)
         {
             dataSaver.OnCreatePlayers(nameField.text);
-            dataSaver.OnReadPlayers();
-            //scoreBoard.text = "";
-            //foreach (PlayerData p in dataSaver.players)
-            //{
-            //    scoreBoard.text += p.namePlayer + " - " + p.scorePlayer + "\n";
-            //}
+            dataSaver.OnReadPlayers();            
+        }
+    }
+
+    [ContextMenu("Charge Names")]
+    public void ChargeNames()
+    {
+        scoreBoard.text = "";
+        foreach (PlayerData p in dataSaver.players)
+        {
+            scoreBoard.text += p.namePlayer + " - " + p.scorePlayer + "\n";
         }
     }
 
