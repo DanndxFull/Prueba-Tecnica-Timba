@@ -34,12 +34,14 @@ public class UIController : MonoBehaviour
     {
         scoreBoardNames.text = "";
         scoreBoardScores.text = "";
-        foreach (PlayerData p in dataSaver.players)
+        if (dataSaver.players.Count != 0)
         {
-            scoreBoardNames.text += p.namePlayer +"\n";
-            scoreBoardScores.text += p.scorePlayer + "\n";
+            foreach (PlayerData p in dataSaver.players)
+            {
+                scoreBoardNames.text += p.namePlayer +"\n";
+                scoreBoardScores.text += p.scorePlayer + "\n";
+            }
         }
-
     }
 
     public void ExitGame()
