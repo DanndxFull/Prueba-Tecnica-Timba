@@ -22,6 +22,5 @@ public class ScoreTime : MonoBehaviour
             currentScore++;
             currentTime = 0;
         }
-        Debug.Log(currentTime);
     }
 }

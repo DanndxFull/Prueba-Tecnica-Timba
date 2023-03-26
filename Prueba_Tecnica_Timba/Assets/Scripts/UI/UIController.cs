@@ -42,6 +42,10 @@ public class UIController : MonoBehaviour
                 scoreBoardScores.text += p.scorePlayer + "\n";
             }
         }
+        else
+        {
+            scoreBoardNames.text = "Currently there are not players";
+        }
     }
 
     public void ExitGame()

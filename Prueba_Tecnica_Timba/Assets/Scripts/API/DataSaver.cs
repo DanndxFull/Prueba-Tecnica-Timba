@@ -62,39 +62,39 @@ public class DataSaver : MonoBehaviour
     }
     private IEnumerator TryGetPlayers()
     {
-        UnityWebRequest request = UnityWebRequest.Get(URL + "/readAll");
-        var handler = request.SendWebRequest();
-
-        float startTime = 0f;
-        while (!handler.isDone)
+        using (UnityWebRequest request = UnityWebRequest.Get(URL + "/readAll"))
         {
-            startTime += Time.deltaTime;
+            var handler = request.SendWebRequest();
 
-            if (startTime > 10f)
+            float startTime = 0f;
+            while (!handler.isDone)
             {
-                break;
+                startTime += Time.deltaTime;
+
+                if (startTime > 10f)
+                {
+                    break;
+                }
+
+                yield return null;
             }
 
-            yield return null;
-        }
-
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log(request.downloadHandler.text);
-
-            players = JsonConvert.DeserializeObject<List<PlayerData>>(request.downloadHandler.text);
-            foreach(PlayerData p in players)
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log("Nombre:"+p.namePlayer+" Score:"+ p.scorePlayer);
-            }
-            UIController.instance.ChangeNames();
-        }
-        else
-        {
-            Debug.Log("No se pudo leer");
-        }
-        request.Dispose();
+                Debug.Log(request.downloadHandler.text);
 
+                players = JsonConvert.DeserializeObject<List<PlayerData>>(request.downloadHandler.text);
+                foreach (PlayerData p in players)
+                {
+                    Debug.Log("Nombre:" + p.namePlayer + " Score:" + p.scorePlayer);
+                }
+                UIController.instance.ChangeNames();
+            }
+            else
+            {
+                Debug.Log("No se pudo leer");
+            }
+        }
         yield return null;
     }
 }
