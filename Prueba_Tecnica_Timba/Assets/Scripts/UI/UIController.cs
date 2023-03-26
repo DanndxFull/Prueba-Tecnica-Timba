@@ -5,9 +5,10 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
-    [SerializeField] TMP_InputField nameField;
-    [SerializeField] TextMeshProUGUI scoreBoardNames, scoreBoardScores;
-    [SerializeField] DataSaver dataSaver;
+    [SerializeField] private TMP_InputField nameField;
+    [SerializeField] private TextMeshProUGUI scoreBoardNames, scoreBoardScores;
+    [SerializeField] private DataSaver dataSaver;
+    [SerializeField] private SceneLoader sceneLoader;
 
     private void Awake()
     {
@@ -16,11 +17,11 @@ public class UIController : MonoBehaviour
 
     public void OnPlayButton()
     {
-        if(nameField.text != null)
-        {
-            CurrentPlayer.instance.SetNamePlayer(nameField.text);
-            //dataSaver.OnCreatePlayers(nameField.text);            
-        }
+        if (nameField.text == null || nameField.text == "")
+            return;
+        
+        CurrentPlayer.instance.SetNamePlayer(nameField.text);
+        sceneLoader.ChargeScene("GameScene");        
     }
 
     [ContextMenu("Charge Names")]
