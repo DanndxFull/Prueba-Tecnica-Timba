@@ -15,4 +15,5 @@ conexion.connect((error)=>{
     console.log('¡Conected With the DB!')
 })
 
+
 module.exports = conexion

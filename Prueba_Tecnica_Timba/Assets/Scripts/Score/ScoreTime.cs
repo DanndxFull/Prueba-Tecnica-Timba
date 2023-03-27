@@ -10,6 +10,7 @@ public class ScoreTime : MonoBehaviour
 
     private void Start()
     {
+        currentScore = 0;
         currentTime = 0;
     }
 

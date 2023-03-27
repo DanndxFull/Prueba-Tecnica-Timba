@@ -14,6 +14,7 @@ public class MoveLeft : MonoBehaviour
     {
         currentTime = 0;
         speed = Random.Range(speedRange.x,speedRange.y);
+        speed += ScoreTime.currentScore / 100;
     }
 
     private void FixedUpdate()

@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     }
 
     [ContextMenu("Charge Names")]
-    public void ChargeNames()
+    public void LoadNames()
     {
         dataSaver.OnReadPlayers();            
     }
@@ -47,6 +47,11 @@ public class UIController : MonoBehaviour
         {
             scoreBoardNames.text = "Currently there are not players";
         }
+    }
+
+    public void NamesCantLoad()
+    {
+        scoreBoardNames.text = "There was not possible connect to the DataBase";
     }
 
     public void ExitGame()

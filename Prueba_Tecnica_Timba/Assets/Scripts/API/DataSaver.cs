@@ -92,6 +92,7 @@ public class DataSaver : MonoBehaviour
             }
             else
             {
+                UIController.instance.NamesCantLoad();
                 Debug.Log("No se pudo leer");
             }
         }

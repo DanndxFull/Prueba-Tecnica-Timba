@@ -5,7 +5,13 @@ using TMPro;
 
 public class ScoreUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI scoreText, nameText;
+
+    private void Start()
+    {        
+        string name = CurrentPlayer.instance.GetNamePlayer();
+        nameText.text = "Player: " + name;
+    }
 
     private void Update()
     {
